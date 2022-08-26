@@ -20,7 +20,7 @@ import inspect
 import os
 
 from absl import logging
-import d4rl  # pylint: disable=unused-import
+# import d4rl  # pylint: disable=unused-import
 import gin
 import gym
 from metaworld.envs.mujoco import sawyer_xyz
@@ -129,7 +129,7 @@ class SawyerReach(sawyer_xyz.SawyerReachPushPickPlaceEnv):
 
   def __init__(self):
     super(SawyerReach, self).__init__(task_type='reach')
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def step(self, action):
     obs = self._get_obs()
@@ -235,7 +235,7 @@ class SawyerPush(sawyer_xyz.SawyerReachPushPickPlaceEnv):
 
   def __init__(self):
     super(SawyerPush, self).__init__(task_type='push')
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
     self._goal = np.array([0.1, 0.85, 0.02])
 
   def step(self, action):
@@ -328,7 +328,7 @@ class SawyerLift(sawyer_xyz.SawyerReachPushPickPlaceEnv):
 
   def __init__(self):
     super(SawyerLift, self).__init__(task_type='reach')
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def _get_dist(self, z):
     min_height, max_height = self.target_height()
@@ -411,7 +411,7 @@ class SawyerDrawerOpen(sawyer_xyz.SawyerDrawerOpenEnv):
 
   def __init__(self):
     super(SawyerDrawerOpen, self).__init__()
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def step(self, action):
     obs = self._get_obs()
@@ -524,7 +524,7 @@ class SawyerBoxClose(sawyer_xyz.SawyerBoxCloseEnv):
 
   def __init__(self):
     super(SawyerBoxClose, self).__init__()
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def _get_goal_pos(self, obs):
     goal_pos = obs[-3:]
