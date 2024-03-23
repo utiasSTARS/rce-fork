@@ -20,7 +20,7 @@ import inspect
 import os
 
 from absl import logging
-# import d4rl  # pylint: disable=unused-import
+import d4rl  # pylint: disable=unused-import
 import gin
 import gym
 from metaworld.envs.mujoco import sawyer_xyz
@@ -466,7 +466,7 @@ class SawyerDrawerClose(sawyer_xyz.SawyerDrawerCloseEnv):
 
   def __init__(self, random_init=False):
     super(SawyerDrawerClose, self).__init__(random_init=random_init)
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def step(self, action):
     obs = self._get_obs()
@@ -580,7 +580,7 @@ class SawyerBinPicking(sawyer_xyz.SawyerBinPickingEnv):
 
   def __init__(self):
     super(SawyerBinPicking, self).__init__()
-    self.initialize_camera(self.init_camera)
+    # self.initialize_camera(self.init_camera)
 
   def step(self, action):
     obs = self._get_obs()
