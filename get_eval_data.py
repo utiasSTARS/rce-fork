@@ -16,7 +16,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--experiment_dir', type=str)
 parser.add_argument('--env', type=str)
 parser.add_argument('--exp_name', type=str)
-parser.add_argument('--main_exp_dir', type=str, default='/media/stonehenge/users/trevor-ablett/rce')
+# parser.add_argument('--main_exp_dir', type=str, default='/media/stonehenge/users/trevor-ablett/rce')
+parser.add_argument('--main_exp_dir', type=str, default='/media/stonehenge/users/trevor-ablett/lfebp')
 parser.add_argument('--alg_name', type=str, default='rce_theirs')
 parser.add_argument('--seeds', type=str, default='[1,2,3,4,5]')
 
@@ -55,6 +56,13 @@ else:
             file = files[0]
         eval_tf_sum_files.append(files[0])
 
+# get num eval trials from gin file
+gin_file = os.path.join(all_exp_dirs[0], 'operative.gin')
+with open(gin_file) as f:
+    for line in f:
+        if line.startswith('train_eval.num_eval_episodes'):
+            num_eval_episodes = int(line.split(' = ')[-1].split('\n')[0])
+
 for file_i, file in enumerate(eval_tf_sum_files):
     if seeds is not None:
         seeds = ast.literal_eval(args.seeds)
@@ -79,9 +87,12 @@ for file_i, file in enumerate(eval_tf_sum_files):
     print(f"Steps: {steps}")
     print(f"Avg returns: {avg_returns}")
 
-    # save the file as lfgp format
+    # save the file as lfgp format..we'll simulate having raw data by repeating the average for the number of eval steps
+    all_returns = np.tile(avg_returns, (num_eval_episodes, 1)).T[:, None, :]  # extra dimension for num tasks
+
     data_dict = {
-        'mean_evaluation_returns': avg_returns
+        'evaluation_returns': all_returns,
+        'evaluation_successes_all_tasks': np.zeros_like(all_returns)
     }
 
     pickle.dump(data_dict, open(os.path.join(all_exp_dirs[file_i], 'train.pkl'), 'wb'))
