@@ -8,20 +8,25 @@ env=$1
 exp_name=$2
 seeds=(1 2 3 4 5)
 
+# echo CUDA VISIBLE : ${CUDA_VISIBLE_DEVICES}
+
 echo "Starting for loop of execution with args $@"
 for seed in "${seeds[@]}"; do
     echo "Running seed ${seed}, env ${env}"
     date_str=$(date '+%m-%d-%y_%H_%M_%S')
 
     case ${env} in
-        "sawyer_drawer_open" | "sawyer_bin_picking" | "door-human-v0")
+        "relocate-human-v0")
+            num_steps=1500000
+            ;;
+        "sawyer_drawer_open" | "sawyer_bin_picking" | "door-human-v0" | "sawyer_drawer_close")
             num_steps=300000
             ;;
         "sawyer_push" | "sawyer_lift" | "sawyer_box_close" | "hammer-human-v0")
             num_steps=500000
             ;;
         *)
-            echo "unknown"
+            echo "unknown env! exiting"
             exit 1
             ;;
     esac

@@ -460,7 +460,6 @@ class SawyerDrawerOpen(sawyer_xyz.SawyerDrawerOpenEnv):
     return dataset
 
 
-@gin.configurable
 class SawyerDrawerClose(sawyer_xyz.SawyerDrawerCloseEnv):
   """A drawer closing task."""
 
