@@ -2,13 +2,12 @@
 
 # Code for running multiple seeds and configurations in series
 
-# e.g. bash all_seeds.bash sawyer_drawer_open mar23
+# e.g. bash all_seeds.bash sawyer_drawer_open mar23 0
 
 env=$1
 exp_name=$2
+gpu_i=$3
 seeds=(1 2 3 4 5)
-
-# echo CUDA VISIBLE : ${CUDA_VISIBLE_DEVICES}
 
 echo "Starting for loop of execution with args $@"
 for seed in "${seeds[@]}"; do
@@ -35,6 +34,7 @@ for seed in "${seeds[@]}"; do
         --root_dir="/media/stonehenge/users/trevor-ablett/rce/${env}/${seed}/rce_theirs/${exp_name}/${date_str}"
         --gin_bindings="train_eval.env_name=\"${env}\""
         --gin_bindings="train_eval.num_iterations=${num_steps}"
+        --gin_bindings="train_eval.gpu_i=${gpu_i}"
     )
 
     if [ ${env} = "sawyer_bin_picking" ]; then

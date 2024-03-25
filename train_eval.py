@@ -140,8 +140,22 @@ def train_eval(
     summarize_grads_and_vars=False,
     random_seed=0,
     actor_min_std=1e-3,  # Added for numerical stability.
-    n_step=10):
+    n_step=10,
+    gpu_i=0):
   """A simple train and eval for SAC."""
+
+  # set specific gpu
+  gpus = tf.config.list_physical_devices('GPU')
+  if gpus:
+    try:
+      tf.config.set_visible_devices(gpus[gpu_i], 'GPU')
+      tf.config.experimental.set_memory_growth(gpus[gpu_i], True)
+      logical_gpus = tf.config.list_logical_devices('GPU')
+      print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPU")
+    except RuntimeError as e:
+      # Visible devices must be set before GPUs have been initialized
+      print(e)
+
   np.random.seed(random_seed)
   root_dir = os.path.expanduser(root_dir)
   train_dir = os.path.join(root_dir, 'train')
