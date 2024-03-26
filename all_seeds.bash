@@ -31,7 +31,7 @@ for seed in "${seeds[@]}"; do
     esac
 
     python_args=(
-        --root_dir="/media/stonehenge/users/trevor-ablett/rce/${env}/${seed}/rce_theirs/${exp_name}/${date_str}"
+        --root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/rce_theirs/${exp_name}/${date_str}"
         --gin_bindings="train_eval.env_name=\"${env}\""
         --gin_bindings="train_eval.num_iterations=${num_steps}"
         --gin_bindings="train_eval.gpu_i=${gpu_i}"
