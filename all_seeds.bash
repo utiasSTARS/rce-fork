@@ -2,11 +2,13 @@
 
 # Code for running multiple seeds and configurations in series
 
-# e.g. bash all_seeds.bash sawyer_drawer_open mar23 0
+# e.g. bash all_seeds.bash sawyer_drawer_open mar23 0 true false
 
 env=$1
 exp_name=$2
 gpu_i=$3
+use_sqil=$4
+nstep_off=$5
 seeds=(1 2 3 4 5)
 
 echo "Starting for loop of execution with args $@"
@@ -31,7 +33,6 @@ for seed in "${seeds[@]}"; do
     esac
 
     python_args=(
-        --root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/rce_theirs/${exp_name}/${date_str}"
         --gin_bindings="train_eval.env_name=\"${env}\""
         --gin_bindings="train_eval.num_iterations=${num_steps}"
         --gin_bindings="train_eval.gpu_i=${gpu_i}"
@@ -40,6 +41,20 @@ for seed in "${seeds[@]}"; do
     if [ ${env} = "sawyer_bin_picking" ]; then
         python_args+=(--gin_bindings='critic_loss.q_combinator="max"')
         python_args+=(--gin_bindings='actor_loss.q_combinator="max"')
+    fi
+
+    if [ "${use_sqil}" = "true" ] && [ "${nstep_off}" = "true" ]; then
+        echo "Running with SQIL loss, nstep off"
+        python_args+=(--gin_bindings='train_eval.n_step=None')
+        python_args+=(--gin_bindings='critic_loss.loss_name="q"')
+        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/sqil_theirs_nstepoff/${exp_name}/${date_str}")
+    elif [ "${use_sqil}" = "true" ]; then
+        echo "Running with SQIL loss, nstep on"
+        python_args+=(--gin_bindings='critic_loss.loss_name="q"')
+        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/sqil_theirs/${exp_name}/${date_str}")
+    else
+        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/rce_theirs/${exp_name}/${date_str}")
+        echo "Running with RCE loss/params."
     fi
 
     echo "All args: ${python_args[@]}"
