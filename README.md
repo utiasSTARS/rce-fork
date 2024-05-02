@@ -1,3 +1,10 @@
+# RCE - STARS Lab Fork
+The [original repository](https://github.com/google-research/google-research/tree/master/rce) is under the google-research repo, so this is our "fork."
+
+Very minor changes, mostly to get things to work with newer libraries and to make evaluation consistent with our own work.
+No need to install anything new if VPACE is already installed.
+Only other expected requirement (also should be set in VPACE install) is environment variable LFGP_TOP_DIR.
+
 # Replacing Rewards with Examples: Example-Based Policy Search via Recursive Classification
 
 <p align="center"> Benjamin Eysenbach, &nbsp; Sergey Levine, &nbsp; Ruslan Salakhutdinov</p>
@@ -82,6 +89,6 @@ python train_eval.py --root_dir=~/rce/hammer --gin_bindings='train_eval.env_name
 To run SQIL, add the additional arguments:
 
 ```--gin_bindings='critic_loss.loss_name="q"' --gin_bindings='train_eval.n_step=None'```
- 
+
 ### Questions?
 If you have any questions, comments, or suggestions, please reach out to Benjamin Eysenbach (eysenbach@google.com).

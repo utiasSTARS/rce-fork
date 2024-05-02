@@ -47,13 +47,13 @@ for seed in "${seeds[@]}"; do
         echo "Running with SQIL loss, nstep off"
         python_args+=(--gin_bindings='train_eval.n_step=None')
         python_args+=(--gin_bindings='critic_loss.loss_name="q"')
-        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/sqil_theirs_nstepoff/${exp_name}/${date_str}")
+        python_args+=(--root_dir="$LFGP_TOP_DIR/${env}/${seed}/sqil_theirs_nstepoff/${exp_name}/${date_str}")
     elif [ "${use_sqil}" = "true" ]; then
         echo "Running with SQIL loss, nstep on"
         python_args+=(--gin_bindings='critic_loss.loss_name="q"')
-        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/sqil_theirs/${exp_name}/${date_str}")
+        python_args+=(--root_dir="$LFGP_TOP_DIR/${env}/${seed}/sqil_theirs/${exp_name}/${date_str}")
     else
-        python_args+=(--root_dir="/media/stonehenge/users/trevor-ablett/lfebp/${env}/${seed}/rce_theirs/${exp_name}/${date_str}")
+        python_args+=(--root_dir="$LFGP_TOP_DIR/${env}/${seed}/rce_theirs/${exp_name}/${date_str}")
         echo "Running with RCE loss/params."
     fi
 
