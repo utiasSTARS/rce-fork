@@ -3,7 +3,33 @@ The [original repository](https://github.com/google-research/google-research/tre
 
 Very minor changes, mostly to get things to work with newer libraries and to make evaluation consistent with our own work.
 No need to install anything new if VPACE is already installed.
-Only other expected requirement (also should be set in VPACE install) is environment variable LFGP_TOP_DIR.
+Only other expected requirement (also should be set in VPACE install) is environment variable VPACE_TOP_DIR.
+
+## New Installation
+To make installation a bit more streamlined, we have updated some packages and the requirements.txt file.
+After entering a conda or vitual env, try:
+
+1. `pip install tf-agents==0.19.0`
+2. `pip install -r requirements.txt`
+   1. This will cause some gym/cloudpickle dependency issues, which can be ignored.
+
+### For training on GPU
+In addition to the above steps:
+
+1. `pip install tensorflow[and-cuda]`
+2. Since the above will replace the tensorflow version, run `pip install tensorflow==2.15`
+3. Confirm with `python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"`
+
+## Running Multiple Seeds in Sequence
+First, ensure `VPACE_TOP_DIR` is set.
+To produce `sqil-theirs` and `rce-theirs` results in VPACE, we used, e.g.:
+
+```bash
+bash all_seeds.bash sawyer_drawer_open test 0 true false
+```
+
+See `all_seeds.bash` for details on meaning of these arguments.
+
 
 # Replacing Rewards with Examples: Example-Based Policy Search via Recursive Classification
 

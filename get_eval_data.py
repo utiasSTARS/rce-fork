@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--experiment_dir', type=str)
 parser.add_argument('--env', type=str)
 parser.add_argument('--exp_name', type=str)
-parser.add_argument('--main_exp_dir', type=str, default=os.environ['LFGP_TOP_DIR'])
+parser.add_argument('--main_exp_dir', type=str, default=os.path.join(os.environ['VPACE_TOP_DIR'], 'results'))
 parser.add_argument('--alg_name', type=str, default='rce_theirs')
 parser.add_argument('--seeds', type=str, default='[1,2,3,4,5]')
 
