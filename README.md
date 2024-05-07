@@ -1,4 +1,4 @@
-# RCE - STARS Lab Fork
+# RCE - VPACE Fork
 The [original repository](https://github.com/google-research/google-research/tree/master/rce) is under the google-research repo, so this is our "fork."
 
 Very minor changes, mostly to get things to work with newer libraries and to make evaluation consistent with our own work.
